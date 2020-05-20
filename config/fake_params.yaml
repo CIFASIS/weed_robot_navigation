@@ -1,0 +1,4 @@
+odom_frame_id: odom # Which frame to use for odometry
+base_frame_id: base_link # Which frame to use for the robot base
+global_frame_id: map # The name of the coordinate frame published by the localization system
+

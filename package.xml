@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>weed_robot_navigation</name>
+  <version>0.0.0</version>
+  <description>The weed_robot_navigation package</description>
+
+  <maintainer email="ismaelaitd@gmail.com">Ismael Ait</maintainer>
+
+  <license>TODO</license>
+  
+  <author email="ismaelaitd@gmail.com">Ismael Ait</author>
+
+  <!-- Dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>tf</build_export_depend>
+  <build_export_depend>nav_msgs</build_export_depend>
+  
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>controller_interface</exec_depend>
+  <exec_depend>ros_control</exec_depend>
+  <exec_depend>ros_controllers</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>roslaunch</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+
+</package>
