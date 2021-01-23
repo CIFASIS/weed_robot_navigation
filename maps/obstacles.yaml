@@ -1,0 +1,12 @@
+# límites a los 20 m (500 px) del centro
+# límites de 4 m (100 px) de ancho 
+# columnas en 10 m (250 px) del centro en x, y 
+# columnas de 2 m (50 px) de diámetro
+
+image: obstacles.pgm # 1200x1200 pixels
+resolution: 0.04 # meters per pixel -> 48x48 meters
+origin: [-24, -24, 0] # pose of the lower-left pixel [x, y, yaw] 
+occupied_thresh: 0.65
+free_thresh: 0.196
+negate: 0
+

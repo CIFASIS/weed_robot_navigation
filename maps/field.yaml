@@ -1,0 +1,8 @@
+
+image: field.pgm # 1060x880 pixels
+resolution: 0.04 # meters per pixel -> 42.4x35.2 meters
+origin: [-21.2, -17.6, 0] # pose of the lower-left pixel [x, y, yaw] 
+occupied_thresh: 0.9
+free_thresh: 0.1
+negate: 0
+

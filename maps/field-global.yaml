@@ -1,0 +1,8 @@
+
+image: field-global.pgm # 550x750 pixels
+resolution: 0.04 # meters per pixel -> 22x30 meters
+origin: [-11, -15, 0] # pose of the lower-left pixel [x, y, yaw] 
+occupied_thresh: 0.9
+free_thresh: 0.1
+negate: 0
+

@@ -1,6 +1,6 @@
 image: empty.pgm # 1200x1200 pixels
-resolution: 0.02 # meters per pixel -> 24x24 meters
-origin: [-2, -12, 0] # pose of the lower-left pixel [x, y, yaw] 
+resolution: 0.04 # meters per pixel -> 48x48 meters
+origin: [-24, -24, 0] # pose of the lower-left pixel [x, y, yaw] 
 occupied_thresh: 0.65
 free_thresh: 0.196
 negate: 0
