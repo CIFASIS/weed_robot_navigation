@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<arg name="common" default="navigation_common_params"/>
+<arg name="tracks" default="[1, 2]"/>
+<arg name="travel_last" default="true"/>
+<arg name="last_offset" default="4.0"/>
+<arg name="use_omega" default="false"/>
+<arg name="bottom" default="false"/>
+
+<!-- Navigation waypoints -->
+<!-- <node name="waypoint" pkg="weed_robot_navigation" type="navigation_waypoints" output="screen"> -->
+<!--   <rosparam file="$(find weed_robot_navigation)/config/navigation_waypoints_params.yaml" command="load"/> -->
+<!--   <rosparam file="$(find weed_robot_navigation)/config/$(arg common).yaml" command="load"/> -->
+  
+<!--   <param name="tracks" type="yaml" value="$(arg tracks)"/> -->
+<!--   <param name="travel_last" type="bool" value="$(arg travel_last)"/> -->
+<!-- </node> -->
+
+<node name="waypoint" pkg="weed_robot_navigation" type="waypoint" output="screen">
+  <rosparam file="$(find weed_robot_navigation)/config/waypoint_params.yaml" command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/$(arg common).yaml" command="load"/>
+  
+  <param name="tracks" type="yaml" value="$(arg tracks)"/>
+  <param name="travel_last" type="bool" value="$(arg travel_last)"/>
+  <param name="last_offset" type="double" value="$(arg last_offset)"/>
+  <param name="use_omega" type="bool" value="$(arg use_omega)"/>
+  <param name="bottom" type="bool" value="$(arg bottom)"/>
+</node>
+
+<node name="goal" pkg="weed_robot_navigation" type="goal" output="screen">
+  <rosparam file="$(find weed_robot_navigation)/config/goal_params.yaml" command="load"/>
+</node>
+
+</launch>

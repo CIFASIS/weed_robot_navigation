@@ -1,0 +1,22 @@
+# sequence: [3, 7]
+
+tracks: [1, 2]
+sprayers_range: 4 # cantidad de surcos y lineas que cubren los rociadores
+
+bottom: false # el primer giro es en la parte superior del campo
+travel_last: true # recorrer la última franja de la secuencia
+last_offset: 4.0
+
+t_turn_start: 2.0 #1.0
+t_turn_end: 2.5 #1.5
+
+pi_turn_start: 0.4
+pi_turn_mid: 4.5
+pi_turn_end: 1.0
+
+omega_turn_start: 1.2 #0.8 #0.4
+omega_turn_1: 5.0 # 4.6 #4.2
+omega_turn_2: 3.8 # 2.8 #2.4
+
+use_omega: true
+turning_radius: 2.6
