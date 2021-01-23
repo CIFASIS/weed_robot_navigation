@@ -1,13 +1,5 @@
-map_type: costmap
+# frames
+global_frame: map
+robot_base_frame: base_link
+transform_tolerance: 1.0 # si la transformación entre map y base_link supera este valor el robot se detiene
 
-#obstacle_range: 6 # (mark) solo se marcarán celdas si están ocupadas por un obstáculo y están dentro del radio de 6 metros de la base del robot
-#raytrace_range: 7 # (clear) solo se limpiarán celdas si estas están libres y dentro de un radio de 7 metros de la base del robot
-
-footprint: [ [-0.2, -0.25], [-0.2, 0.3], [0.2, 0.3], [0.2, -0.25] ] # huella del robot (si el robot es circular se puede indicar el radio)
-#robot_radius: 0.3
-inflation_radius: 0.360555128 # debería ser mayor o igual al radio máximo del robot: sqrt(0.2^2 + 0.3^2)
-
-#observation_sources: laser_scan_sensor # lista de los sensores para construir el mapa, detallados a continuación
-#laser_scan_sensor: {sensor_frame: laser_link, data_type: LaserScan, topic: /diff_drive_robot/laser_scan, marking: true, clearing: true}
-
-transform_tolerance: 1 # máxima latencia de actualización de las trasnformaciones sobre tf, si supera 1 segundo el robot se detiene

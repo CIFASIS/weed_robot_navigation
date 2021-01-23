@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<arg name="common" default="navigation_common_params"/>
+
+<!-- Point Cloud sensor -->
+<node name="point_cloud_full" pkg="weed_robot_navigation" type="point_cloud_obstacle" output="screen">
+  <rosparam file="$(find weed_robot_navigation)/config/point_cloud_params.yaml" command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/$(arg common).yaml" command="load"/>
+</node>
+
+</launch>

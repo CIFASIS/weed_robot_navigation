@@ -1,0 +1,10 @@
+plant_radius: 0.03
+plant_height: 0.3
+plant_separation: 0.1
+
+sensor_rate: 1.0
+sensor_angle: 2.269
+sensor_range: 7.0
+sensor_offset: 2.0
+
+robot_width: 1.0

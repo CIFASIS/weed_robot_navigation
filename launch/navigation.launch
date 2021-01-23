@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
-<arg name="world" default="empty"/>
-<arg name="localization" default="fake"/>
+<param name="/use_sim_time" value="true"/>
+
+<arg name="global_map" default="empty"/> <!-- empty, simple -->
+<arg name="localization" default="fake"/> <!-- amcl, fake -->
+<arg name="world_odom" default="true"/> <!-- true, false -->
+<arg name="rviz" default="waypoints"/> <!-- teb, local, plant -->
+<arg name="visualization" default="true"/>
 
 <!-- Map server -->
-<node name="map_server" pkg="map_server" type="map_server" 
-    args="$(find weed_robot_navigation)/maps/$(arg world).yaml"/>
+<node name="map_server_global" pkg="map_server" type="map_server" 
+    args="$(find weed_robot_navigation)/maps/$(arg global_map).yaml">
+  <remap from="map" to="global_map"/>
+</node>
     
 <!-- Localization-->
 <group if="$(eval localization=='fake')">
-  <node name="fake" pkg="fake_localization" type="fake_localization" output="screen">
-    <remap from="base_pose_ground_truth" to="steer_drive_controller/odom"/>
-    <rosparam file="$(find weed_robot_navigation)/config/fake_params.yaml" command="load"/>
-  </node>
+  <group if="$(eval world_odom)">
+    <node name="fake_world" pkg="fake_localization" type="fake_localization" output="screen">
+      <remap from="base_pose_ground_truth" to="world_odom_publisher/odom"/>
+      <rosparam file="$(find weed_robot_navigation)/config/fake_params.yaml" command="load"/>
+    </node>
+  </group>
+  <group unless="$(eval world_odom)">
+    <node name="fake_encoders" pkg="fake_localization" type="fake_localization" output="screen">
+      <remap from="base_pose_ground_truth" to="steer_drive_controller/odom"/>
+      <rosparam file="$(find weed_robot_navigation)/config/fake_params.yaml" command="load"/>
+    </node>
+  </group>
 </group>
 
 <!-- Move base -->
 <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
 
-  <rosparam file="$(find weed_robot_navigation)/config/costmap_common_params.yaml" 
-      command="load" ns="global_costmap"/>
-  <rosparam file="$(find weed_robot_navigation)/config/costmap_common_params.yaml" 
-      command="load" ns="local_costmap"/>
-  <rosparam file="$(find weed_robot_navigation)/config/local_costmap_params.yaml" 
-      command="load"/>
-  <rosparam file="$(find weed_robot_navigation)/config/global_costmap_params.yaml" 
-      command="load"/>
-  <rosparam file="$(find weed_robot_navigation)/config/base_local_planner_params.yaml" 
-      command="load"/>
-  <rosparam file="$(find weed_robot_navigation)/config/base_global_planner_params.yaml" 
-      command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+  <rosparam file="$(find weed_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+  <rosparam file="$(find weed_robot_navigation)/config/local_costmap_params.yaml" command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/global_costmap_params.yaml" command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/teb_local_planner_params.yaml" command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/base_global_planner_params.yaml" command="load"/>
 
   <remap from="cmd_vel" to="steer_drive_controller/cmd_vel"/>
   <remap from="odom" to="steer_drive_controller/odom"/>
-<!--   <remap from="scan" to="diff_drive_robot/laser_scan"/> -->
 
-  <!-- A fast, interpolated global planner built as a more flexible replacement to navfn. -->
-  <!-- navfn/NavfnROS, global_planner/GlobalPlanner, carrot_planner/CarrotPlanner -->
   <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
-
-  <!-- provides an interface for local planners used in navigation -->
-  <!-- base_local_planner/TrajectoryPlannerROS, eband_local_planner/EBandPlannerROS, teb_local_planner/TebLocalPlannerROS  -->
-  <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+  <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/>
   
-  <param name="controller_frequency" value="20.0" />
-  <param name="planner_frequency" value="10.0" />
+  <param name="controller_frequency" value="5"/>
+  <param name="planner_frequency" value="2"/>
 
 </node>
+
+<!-- Rviz -->
+<group if="$(eval visualization)">
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find weed_robot_navigation)/rviz/$(arg rviz).rviz"/>
+</group>
 
 </launch>

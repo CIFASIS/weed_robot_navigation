@@ -25,8 +25,6 @@ include_directories(
 
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
-#add_library(world_odom_publisher SHARED src/world_odom_publisher.cpp)
-#target_link_libraries(world_odom_publisher ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_executable(point_cloud_obstacle src/point_cloud_obstacle.cpp)
+target_link_libraries(point_cloud_obstacle ${catkin_LIBRARIES})
 
-# add_executable(world_odom_publisher src/world_odom_publisher.cpp)
-# target_link_libraries(world_odom_publisher ${catkin_LIBRARIES})

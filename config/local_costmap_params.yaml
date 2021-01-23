@@ -1,12 +1,24 @@
 local_costmap:
-   global_frame: map
-   robot_base_frame: base_link
-   update_frequency: 10.0
-   publish_frequency: 10.0
-   
-   static_map: false
-   rolling_window: true
-   width: 10.0
-   height: 10.0
-   resolution: 0.02
 
+  update_frequency: 1
+  publish_frequency: 0.5
+  
+  #static_map: true
+  rolling_window: true
+  width: 14 #16 #10 #12
+  height: 12 #16 #8 #14
+  resolution: 0.06
+  
+  #footprint: [[0, 0.527], [1.582, 0.527], [1.582, -0.527], [0, -0.527]] # robot completo real
+  footprint: [[0, 0.427], [1.582, 0.427], [1.582, -0.427], [0, -0.427]] # robot completo reducido
+
+  plugins:
+   - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+  
+  obstacle_layer:
+    enabled: true
+    observation_sources: point_cloud_sensor
+    obstacle_range: 15.0
+    point_cloud_sensor: {data_type: PointCloud, topic: point_cloud_full/sensor, sensor_frame: base_link, marking: true, clearing: true}
+    
+    
