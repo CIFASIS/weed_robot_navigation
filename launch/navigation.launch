@@ -5,9 +5,10 @@
 
 <arg name="global_map" default="empty"/> <!-- empty, simple -->
 <arg name="localization" default="fake"/> <!-- amcl, fake -->
-<arg name="world_odom" default="true"/> <!-- true, false -->
+<arg name="world_odom" default="true"/>
 <arg name="rviz" default="waypoints"/> <!-- teb, local, plant -->
 <arg name="visualization" default="true"/>
+<arg name="local_costmap" default="local_costmap_params"/>
 
 <!-- Map server -->
 <node name="map_server_global" pkg="map_server" type="map_server" 
@@ -36,7 +37,7 @@
 
   <rosparam file="$(find weed_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
   <rosparam file="$(find weed_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
-  <rosparam file="$(find weed_robot_navigation)/config/local_costmap_params.yaml" command="load"/>
+  <rosparam file="$(find weed_robot_navigation)/config/$(arg local_costmap).yaml" command="load"/>
   <rosparam file="$(find weed_robot_navigation)/config/global_costmap_params.yaml" command="load"/>
   <rosparam file="$(find weed_robot_navigation)/config/teb_local_planner_params.yaml" command="load"/>
   <rosparam file="$(find weed_robot_navigation)/config/base_global_planner_params.yaml" command="load"/>
