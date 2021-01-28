@@ -18,11 +18,17 @@ El script [bin/weed_robot.sh](bin/weed_robot.sh) se utiliza para levantar todos 
 Ejemplos:
 
 ```
-$ ./weed_robot.sh -w obstacles -m obstacles -p "-x 0.0 -y 0.0 -Y 0.0" -g -v
+$ ./bin/weed_robot.sh -w obstacles -m obstacles -p "-x 0.0 -y 0.0 -Y 0.0" -g -v
 ```
 
 ```
-$ ./weed_robot.sh -w field -m field -p "-x -14.56 -y 1.0 -Y 1.5708" -g -v -s -n -t "[3, 4]" -l "-10.0"
+$ ./bin/weed_robot.sh -w field -m field -p "-x -14.56 -y 1.0 -Y 1.5708" -g -v -s -n -t "[3, 4]" -l "-10.0"
+```
+```
+$ ./bin/weed_robot.sh -w field_plants -m field -p "-x -14.56 -y 1.0 -Y 1.5708" -g -v -s -n -t "[3, 4]" -l "-10.0"
 ```
 
+![Screenshot](img/navigation.png)
+
+En la carpeta [test](test) se encuentran los scripts python utilizados para los experimentos de giros y recorridos.
 
