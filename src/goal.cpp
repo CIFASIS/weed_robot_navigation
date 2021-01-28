@@ -139,8 +139,8 @@ bool isRobotNearGoal(geometry_msgs::Pose pose, const tf::TransformListener& tf) 
     // obtiene el pose del robot
     tf::StampedTransform transform;
     ros::Time now = ros::Time::now();
-    tf.waitForTransform("map", "base_link", now, ros::Duration(2.0));
-    tf.lookupTransform("map", "base_link", now, transform);
+    tf.waitForTransform("map", "base_link_vis", now, ros::Duration(2.0));
+    tf.lookupTransform("map", "base_link_vis", now, transform);
     tf::Matrix3x3 m(transform.getRotation());
     double roll, pitch, yaw;
     m.getRPY(roll, pitch, yaw);

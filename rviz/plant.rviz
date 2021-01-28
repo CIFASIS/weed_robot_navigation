@@ -63,7 +63,7 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
+        base_link_vis:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -137,7 +137,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_link:
+        base_link_vis:
           Value: true
         chassis_link:
           Value: false
@@ -175,7 +175,7 @@ Visualization Manager:
       Tree:
         map:
           odom:
-            base_link:
+            base_link_vis:
               chassis_link:
                 fork_fl_link:
                   wheel_fl_link:

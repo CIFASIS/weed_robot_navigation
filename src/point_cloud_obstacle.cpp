@@ -112,16 +112,16 @@ int main(int argc, char** argv) {
         // crea la nube de puntos
         sensor_msgs::PointCloud pc;
         pc.header.stamp = ros::Time::now();
-        pc.header.frame_id = "base_link";
+        pc.header.frame_id = "base_link_vis";
 
-        // obtiene la posición (x, y) del base_link del robot
+        // obtiene la posición (x, y) del base_link_vis del robot
         tf::StampedTransform transform;
         ros::Time now = ros::Time::now();
-        tf.waitForTransform("map", "base_link", now, ros::Duration(2.0));
-        tf.lookupTransform("map", "base_link", now, transform);
+        tf.waitForTransform("map", "base_link_vis", now, ros::Duration(2.0));
+        tf.lookupTransform("map", "base_link_vis", now, transform);
         double baseLinkX = transform.getOrigin().x();
         double baseLinkY = transform.getOrigin().y();
-        // ROS_INFO("base_link: (%.2f, %.2f)", baseLinkX, baseLinkY);
+        // ROS_INFO("base_link_vis: (%.2f, %.2f)", baseLinkX, baseLinkY);
 
         // recorre las líneas
         for (double lineX = startX; lineX <= endX; lineX += lineSeparation) {
@@ -157,18 +157,18 @@ int main(int argc, char** argv) {
 
                 // ROS_INFO("Se genera la planta en y %.2f", plantY);
 
-                // genera el punto del centro  de la planta y lo transforma al frame base_link
+                // genera el punto del centro  de la planta y lo transforma al frame base_link_vis
                 geometry_msgs::PointStamped mapPoint; // planta en frame map
                 mapPoint.header.frame_id = "map";
                 mapPoint.header.stamp = ros::Time();
                 mapPoint.point.x = lineX;
                 mapPoint.point.y = plantY;
                 mapPoint.point.z = 0.0;
-                geometry_msgs::PointStamped basePoint; // planta en frame base_link
+                geometry_msgs::PointStamped basePoint; // planta en frame base_link_vis
                 try {
-                    tf.transformPoint("base_link", mapPoint, basePoint);
+                    tf.transformPoint("base_link_vis", mapPoint, basePoint);
                 } catch(tf::TransformException& ex){
-                    ROS_ERROR("Excepcion intentando hacer la transformacion de map a base_link: %s",
+                    ROS_ERROR("Excepcion intentando hacer la transformacion de map a base_link_vis: %s",
                             ex.what());
                     continue;
                 }

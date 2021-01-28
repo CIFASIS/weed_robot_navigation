@@ -65,7 +65,7 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
+        base_link_vis:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -338,7 +338,7 @@ Visualization Manager:
       Name: Current View
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
-      Target Frame: base_link
+      Target Frame: base_link_vis
       Value: ThirdPersonFollower (rviz)
       Yaw: 3.1415927410125732
     Saved:
@@ -359,7 +359,7 @@ Visualization Manager:
         Name: ThirdPersonFollower
         Near Clip Distance: 0.009999999776482582
         Pitch: 1.5697963237762451
-        Target Frame: base_link
+        Target Frame: base_link_vis
         Value: ThirdPersonFollower (rviz)
         Yaw: 3.1415927410125732
 Window Geometry:

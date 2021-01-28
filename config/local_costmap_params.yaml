@@ -19,6 +19,6 @@ local_costmap:
     enabled: true
     observation_sources: point_cloud_sensor
     obstacle_range: 15.0
-    point_cloud_sensor: {data_type: PointCloud, topic: point_cloud_full/sensor, sensor_frame: base_link, marking: true, clearing: true}
+    point_cloud_sensor: {data_type: PointCloud, topic: point_cloud_full/sensor, sensor_frame: base_link_vis, marking: true, clearing: true}
     
     
