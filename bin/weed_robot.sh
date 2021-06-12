@@ -97,7 +97,7 @@ echo "Pose: ${pose}"
 echo "Gui: ${gui}"
 
 sleep 1s
-roslaunch weed_robot_gazebo gazebo.launch world:="${world}" pose:="${pose}" gui:="${gui}" &
+roslaunch weed_robot_gazebo gazebo.launch world:="${world}" pose:="${pose}" gui:="${gui}" paused:=true &
 
 if [ "${sensor}" = true ];
 then

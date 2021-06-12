@@ -26,7 +26,7 @@
   </group>
   <group unless="$(eval world_odom)">
     <node name="fake_encoders" pkg="fake_localization" type="fake_localization" output="screen">
-      <remap from="base_pose_ground_truth" to="steer_drive_controller/odom"/>
+      <remap from="base_pose_ground_truth" to="ackermann_steering_controller/odom"/>
       <rosparam file="$(find weed_robot_navigation)/config/fake_params.yaml" command="load"/>
     </node>
   </group>
@@ -42,8 +42,8 @@
   <rosparam file="$(find weed_robot_navigation)/config/teb_local_planner_params.yaml" command="load"/>
   <rosparam file="$(find weed_robot_navigation)/config/base_global_planner_params.yaml" command="load"/>
 
-  <remap from="cmd_vel" to="steer_drive_controller/cmd_vel"/>
-  <remap from="odom" to="steer_drive_controller/odom"/>
+  <remap from="cmd_vel" to="ackermann_steering_controller/cmd_vel"/>
+  <remap from="odom" to="ackermann_steering_controller/odom"/>
 
   <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
   <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/>

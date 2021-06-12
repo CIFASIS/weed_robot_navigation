@@ -31,7 +31,7 @@ def runNavigation(name, track, omega):
         stdout=fStdout, stderr=fStderr, shell=True, preexec_fn=os.setsid, universal_newlines=True)
 
     pBag = subprocess.Popen('rosbag record -O bag/' + name + '-full.bag ' + 
-        '/amcl_pose /move_base/GlobalPlanner/plan /move_base/TebLocalPlannerROS/local_plan /waypoint/waypoints /steer_drive_controller/cmd_vel ' +
+        '/amcl_pose /move_base/GlobalPlanner/plan /move_base/TebLocalPlannerROS/local_plan /waypoint/waypoints /ackermann_steering_controller/cmd_vel ' +
         '__name:=my_bag', 
         stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
 
