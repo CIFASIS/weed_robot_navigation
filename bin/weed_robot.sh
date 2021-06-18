@@ -108,7 +108,7 @@ fi
 
 sleep 4s
 roslaunch weed_robot_navigation navigation.launch global_map:="${map}" visualization:="${visualization}" \
-  rviz:=teb local_costmap:="${local_costmap}" &
+  rviz:=planners local_costmap:="${local_costmap}" &
 
 sleep 2s
 if [ "${sensor}" = true ];
