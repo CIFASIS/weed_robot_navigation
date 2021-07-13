@@ -40,10 +40,13 @@ include_directories(
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
 add_executable(point_cloud_obstacle src/point_cloud_obstacle.cpp)
+add_dependencies(point_cloud_obstacle ${catkin_EXPORTED_TARGETS})
 target_link_libraries(point_cloud_obstacle ${catkin_LIBRARIES})
 
 add_executable(waypoint src/waypoint.cpp)
+add_dependencies(waypoint ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(waypoint ${catkin_LIBRARIES})
 
 add_executable(goal src/goal.cpp)
+add_dependencies(goal ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(goal ${catkin_LIBRARIES})
