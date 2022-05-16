@@ -29,14 +29,14 @@ double normalizeAngle(double theta);
 
 int main(int argc, char** argv) {
 
-    // inicialización
+    // initialization
     ros::init(argc, argv, "goal");
     std::string nodeName = ros::this_node::getName();
     ROS_INFO("Starting node: %s", nodeName.c_str());
     ros::NodeHandle ns(nodeName);
     ros::NodeHandle nh;
 
-    // parámetros
+    // params
     ns.getParam("distance_next_goal", distanceNextGoal);
     ns.getParam("angle_next_goal", angleNextGoal);
     ns.getParam("check_rate", checkRate);
@@ -53,27 +53,27 @@ int main(int argc, char** argv) {
     // tf
     tf::TransformListener tf(ros::Duration(1.0));
 
-    // deja pasar un segundo
+    // wait a second
     if (ros::ok()) {
         ros::spinOnce();
         ros::Rate startup(1.0);
         startup.sleep();
     }
 
-    // inicializa el action client
+    // action client initialization
     MoveBaseClient ac("move_base", true);
     while (!ac.waitForServer(ros::Duration(5.0))) {
         ROS_INFO("Waiting for the move_base action server to come up");
     }
 
-    // dejamos pasar unos segundos!
+    // wait a couple of seconds
     if (ros::ok()) {
         ros::spinOnce();
         ros::Rate startup(1.0/5.0);
         startup.sleep();
     }
 
-    // invoca el servicio
+    // call the service
     ros::ServiceClient client =
             nh.serviceClient<weed_robot_navigation::GetWaypoints>("waypoint/get_waypoints");
     weed_robot_navigation::GetWaypoints srv;
@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
     generateGoal(pose, goal);
     ac.sendGoal(goal);
 
-    // espera a que se acerque al objetivo y envía el siguiente
+    // wait to get close to the goal and send the following
     ros::Rate rate(checkRate);
 
     int size = waypoints.poses.size();
@@ -136,7 +136,7 @@ void generateGoal(geometry_msgs::Pose pose, move_base_msgs::MoveBaseGoal& goal) 
 
 bool isRobotNearGoal(geometry_msgs::Pose pose, const tf::TransformListener& tf) {
 
-    // obtiene el pose del robot
+    // get robot pose
     tf::StampedTransform transform;
     ros::Time now = ros::Time::now();
     tf.waitForTransform("map", "base_link_vis", now, ros::Duration(2.0));
@@ -149,19 +149,19 @@ bool isRobotNearGoal(geometry_msgs::Pose pose, const tf::TransformListener& tf) 
     double theta = yaw;
     //ROS_INFO("Base link pose: (%.2f, %.2f, %.2f)", x, y, theta);
 
-    // compara x
+    // compare x
     double goalX = pose.position.x;
     if (abs(goalX - x) > distanceNextGoal) {
         return false;
     }
 
-    // compara y
+    // compare y
     double goalY = pose.position.y;
     if (abs(goalY - y) > distanceNextGoal) {
         return false;
     }
 
-    // compara theta
+    // compare theta
     geometry_msgs::Quaternion q = pose.orientation;
     double goalTheta = tf::getYaw(q);
     if (abs(normalizeAngle(goalTheta - theta)) > angleNextGoal) {

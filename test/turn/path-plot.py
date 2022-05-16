@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Genera un plot 2D con las trayectorias de los giros
+# Generates a 2D plot from the turn data
 #
 
 import seaborn as sns
@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 import math
 import matplotlib.lines as mlines
 
-# lee los datos y calcula el recorrido en la mediana
+# reads the data and calculates the median path
 data = pd.read_csv('turns-data.csv')
 
 sns.set_style("whitegrid")

@@ -89,9 +89,9 @@ esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
-echo "Ejecutando simulación del robot desmalezador"
+echo "Running simulation of the weeding robot"
 echo "World Gazebo: ${world}"
-echo "Mapa global: ${map}"
+echo "Map global: ${map}"
 echo "Navigation: ${navigation}"
 echo "Pose: ${pose}"
 echo "Gui: ${gui}"
@@ -113,20 +113,20 @@ roslaunch weed_robot_navigation navigation.launch global_map:="${map}" visualiza
 sleep 2s
 if [ "${sensor}" = true ];
 then
-  echo "Ejecutando generación de nube de puntos"
+  echo "Running point cloud generation"
   roslaunch weed_robot_navigation sensor.launch common:=navigation_common_params &
 else
-  echo "No se ejecutará la generación de nube de puntos"
+  echo "Running without point cloud generation"
 fi
 
 sleep 2s
 if [ "${navigation}" = true ];
 then
-  echo "Ejecutando navegación"
+  echo "Running coverage navigation"
   roslaunch weed_robot_navigation waypoint.launch common:=navigation_common_params \
     travel_last:=true tracks:="${tracks}" use_omega:="${omega}" bottom:="${bottom}" last_offset:="${last}"
 else
-  echo "No se ejecutará navegación"
+  echo "Running without coverage navigation"
 fi
 
 wait

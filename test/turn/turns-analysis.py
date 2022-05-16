@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Muestra resultados estadísticos de los giros
+# Displays statistical results of the turns
 #
 
 import pandas as pd

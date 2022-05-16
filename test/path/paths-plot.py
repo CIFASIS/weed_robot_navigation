@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Genera un plot 2D de la trayectoria realizada por el robot y la trayectoria ideal entre franjas
+# Generates a 2D plot of the path followed by the robot and the ideal path between swaths.
 # 
 
 import seaborn as sns

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Ejecuta la simulación y recolecta los datos para las pruebas de giros
+# Runs the simulation and collects the data for the turning tests
 #
 
 import subprocess
@@ -18,7 +18,7 @@ def formatTime(sec):
 
 def runNavigation(name, track, omega):
     start = time()
-    print("        Navegación... ", end = '', flush=True)
+    print("        Navigation... ", end = '', flush=True)
 
     fStdout = open('log/' + name + '-stdout.log', 'w')
     fStderr = open('log/' + name + '-stderr.log', 'w')
@@ -62,7 +62,7 @@ def runNavigation(name, track, omega):
 
 def registerPath(name):
     start = time()
-    print("        Cálculo de trayectoria... ", end = '', flush=True)
+    print("        Trajectory calculation... ", end = '', flush=True)
 
     subprocess.run('evo_traj bag bag/' + name + '-full.bag /amcl_pose --save_as_tum', shell=True, stdout=PIPE, stderr=PIPE)
     subprocess.run('mv amcl_pose.tum tum/' + name + '-full-path.tum', shell=True, stdout=PIPE, stderr=PIPE)
@@ -90,7 +90,7 @@ def registerPath(name):
 
 def collectData(name):
     start = time()
-    print("        Recolección de datos... ", end = '', flush=True)
+    print("        Data gathering... ", end = '', flush=True)
 
     p = subprocess.Popen(
         'evo_traj tum tum/' + name + '-short-path.tum', universal_newlines=True, shell=True, stdout=PIPE, stderr=PIPE)
@@ -112,12 +112,12 @@ dataFile = open('turns-data.csv', 'a')
 #dataFile.write('iteration,length,duration,type\n')
 n = 30
 l = [('omega', 1, True), ('omega', 2, True), ('pi', 3, None), ('pi', 4, None), ('pi', 5, None), ('pi', 6, None)]
-print("Se correrán " + str(n) + " iteraciones de " + str(len(l)) + " tipos de giro distintos")
+print("Run " + str(n) + " times " + str(len(l)) + " different turning types")
 for t in l:
     turnType = t[0] + str(t[1])
-    print("Giro tipo " + turnType)
+    print("Turning type " + turnType)
     for i in range(30, n + 1):
-        print("    Iteración " + str(i))
+        print("    Iteration " + str(i))
         name = turnType  + '-' + str(i)
         runNavigation(name, t[1] + 1, t[2])
         sleep(1)
@@ -132,4 +132,4 @@ subprocess.run('find plot/ -type f -name "*_rpy_view.pdf" -exec rm -f {} \\;', s
 subprocess.run('find plot/ -type f -name "*_xyz_view.pdf" -exec rm -f {} \\;', shell=True, stdout=PIPE, stderr=PIPE)
 dataFile.close()
 globalEnd = time()
-print("Fin " + formatTime(globalEnd - globalStart))
+print("End " + formatTime(globalEnd - globalStart))

@@ -57,16 +57,16 @@ TebLocalPlannerROS:
   include_costmap_obstacles: true
   costmap_obstacles_behind_robot_dist: 10
   legacy_obstacle_association: false
-  obstacle_poses_affected: 15 # cantidad de teb poses tenidos en cuenta por cada obstáculo 
-                              # (si legacy_obstacle_association=true)
-  obstacle_association_force_inclusion_factor: 20 # todos los obstáculos dentro de este factor por el min_obstacle_dist son tenidos en cuenta 
-                                                 # (solo importa si legacy_obstacle_association=false)
-  obstacle_association_cutoff_factor: 40 # factor de min_obstacle_dist límite para tener en cuenta los obstáculos
+  obstacle_poses_affected: 15 # number of teb poses taken into account for each obstacle
+                              # (only if legacy_obstacle_association=true)
+  obstacle_association_force_inclusion_factor: 20 # all the obstacles within this factor times min_obstacle_dist are taken into account 
+                                                 # (only if legacy_obstacle_association=false)
+  obstacle_association_cutoff_factor: 40 # min_obstacle_dist limit factor to take into account obstacles
   
   include_dynamic_obstacles: false 
   dynamic_obstacle_inflation_dist: 0.6 # include_dynamic_obstacles=true
   
-  costmap_converter_plugin: "" # deshabilitado
+  costmap_converter_plugin: "" # disabled
   costmap_converter_spin_thread: true
   costmap_converter_rate: 5
   

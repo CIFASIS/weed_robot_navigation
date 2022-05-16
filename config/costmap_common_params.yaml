@@ -1,5 +1,5 @@
 # frames
 global_frame: map
 robot_base_frame: base_link_vis
-transform_tolerance: 1.0 # si la transformación entre map y base_link_vis supera este valor el robot se detiene
+transform_tolerance: 1.0 # if the transformation between map and base_link_vis exceeds this value the robot stops
 

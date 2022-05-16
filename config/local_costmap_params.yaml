@@ -9,8 +9,8 @@ local_costmap:
   height: 12 #16 #8 #14
   resolution: 0.06
   
-  #footprint: [[0, 0.527], [1.582, 0.527], [1.582, -0.527], [0, -0.527]] # robot completo real
-  footprint: [[0, 0.427], [1.582, 0.427], [1.582, -0.427], [0, -0.427]] # robot completo reducido
+  #footprint: [[0, 0.527], [1.582, 0.527], [1.582, -0.527], [0, -0.527]] # full robot footprint
+  footprint: [[0, 0.427], [1.582, 0.427], [1.582, -0.427], [0, -0.427]] # reduced robot footprint
 
   plugins:
    - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}

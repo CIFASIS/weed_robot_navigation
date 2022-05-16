@@ -67,13 +67,13 @@ TurningType calculateTurnType(int index);
 
 int main(int argc, char** argv) {
 
-    // inicialización
+    // initialization
     ros::init(argc, argv, "waypoint");
     std::string nodeName = ros::this_node::getName();
     ROS_INFO("Starting node: %s", nodeName.c_str());
     ros::NodeHandle ns(nodeName);
 
-    // parámetros
+    // params
     ns.getParam("sequence", sequence);
     ns.getParam("tracks", tracks);
     ns.getParam("sprayers_range", sprayersRange);
@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
     // service
     ros::ServiceServer service = ns.advertiseService("get_waypoints", getWaypoints);
 
-    // componente x de la primera y última línea de cultivos
+    // x component of the first and last crop line
     if ((lineNum - 1.0) * lineSeparation > fieldWidth) {
         ROS_ERROR("too many crop lines!");
         return -1;
@@ -151,15 +151,15 @@ int main(int argc, char** argv) {
     startX = - lineNum * lineSeparation / 2.0;
     endX = startX + lineNum  * lineSeparation;
     ROS_INFO("x range: (%.2f, %.2f)", startX, endX);
-    // startX corresponde al punto medio surco a la izquierda de la primer línea de cultivos
-    // endX corresponde al punto medio surco a la derecha de la última línea de cultivos
+    // startX half furrow to the left of the first crop line
+    // endX half furrow to the right of the last crop line
 
-    // componente y del inicio y final de una línea de cultivos
+    // y component of the first and last crop line
     startY = - (fieldDepth / 2.0) + headland;
     endY = (fieldDepth / 2.0) - headland;
     ROS_INFO("y range: (%.2f, %.2f)", startY, endY);
 
-    // publica waypoints
+    // publish waypoints
     calculateWaypoints(waypoints);
     waypointsReady = true;
     ros::Rate rate(1);
@@ -203,7 +203,7 @@ void calculateWaypoints(geometry_msgs::PoseArray& waypoints) {
 
     std::vector<geometry_msgs::Pose> waypointVector;
 
-    // iterar por la secuencia
+    // for each sequence item
     bool b = bottom;
     for (int i = 0; i < size - 1; i++) {
         double from, to;

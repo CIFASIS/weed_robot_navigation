@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Genera los gráficos de boxplot con la información de los giros
+# Generates boxplot graphs from the turn data
 #
 
 import seaborn as sns

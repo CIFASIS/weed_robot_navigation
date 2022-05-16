@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Ejecuta la simulación y recolecta los datos para las pruebas de trayectorias
+# Runs simulation and collects data for testing
 #
 
 import subprocess
@@ -19,7 +19,7 @@ def formatTime(sec):
 
 def runNavigation(name, sequence, omega):
     start = time()
-    print("        Navegación... ", flush=True)
+    print("        Navigation... ", flush=True)
 
     fStdout = open('log/' + name + '-stdout.log', 'w')
     fStderr = open('log/' + name + '-stderr.log', 'w')
@@ -58,7 +58,7 @@ def runNavigation(name, sequence, omega):
 
 def registerPath(name):
     start = time()
-    print("        Cálculo de trayectoria... ", end = '', flush=True)
+    print("        Trajectory calculation... ", end = '', flush=True)
 
     subprocess.run('evo_traj bag bag/' + name + '-full.bag /amcl_pose --save_as_tum', shell=True, stdout=PIPE, stderr=PIPE)
     subprocess.run('mv amcl_pose.tum tum/' + name + '-full-path.tum', shell=True, stdout=PIPE, stderr=PIPE)
@@ -71,7 +71,7 @@ def registerPath(name):
 
 def collectData(name):
     start = time()
-    print("        Recolección de datos... ", end = '', flush=True)
+    print("        Data gathering... ", end = '', flush=True)
 
     p = subprocess.Popen(
         'evo_traj tum tum/' + name + '-full-path.tum', universal_newlines=True, shell=True, stdout=PIPE, stderr=PIPE)

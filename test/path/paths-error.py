@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Genera gráficos de los errores APE y RPE comparando la trayectoria realizada por el robot con la ideal
+# Generates graphs of APE and RPE errors comparing the robot's trajectory with the ideal one.
 #
 
 import subprocess
@@ -36,8 +36,7 @@ def plotError(pathType, errorType, poseRelation):
     timestamps -= min(timestamps)
     errors = results['error_array.npz']
     """
-    timestamps y error son arrays con todos los timestamps y errores del recorrido 
-    ejemplos:
+    all the timestamps and errors of the route
     timestamps: array([ 17.239,  17.34 ,  17.44 , ..., 599.585, 599.686, 599.787])
     errors: array([0.00333301, 0.00398368, 0.00458133, ..., 0.022053  , 0.02140115, 0.02076639])
     len(timestamps) == len(errors)

@@ -33,14 +33,14 @@ void currentGoalCallback(const geometry_msgs::PoseStampedConstPtr& goal);
 
 int main(int argc, char** argv) {
 
-    // inicialización
+    // initialization
     ros::init(argc, argv, "point_cloud_obstacle");
     std::string nodeName = ros::this_node::getName();
     ROS_INFO("Starting node: %s", nodeName.c_str());
     ros::NodeHandle ns(nodeName);
     ros::NodeHandle nh;
 
-    // parámetros
+    // params
     ns.getParam("field_width", fieldWidth);
     ns.getParam("field_depth", fieldDepth);
     ns.getParam("plant_radius", plantRadius);
@@ -81,14 +81,14 @@ int main(int argc, char** argv) {
     // tf
     tf::TransformListener tf(ros::Duration(1.0));
 
-    // deja pasar un segundo
+    // wait a second
     if (ros::ok()) {
         ros::spinOnce();
         ros::Rate startup(1.0);
         startup.sleep();
     }
 
-    // componente x de la primera y última línea de cultivos
+    // x component of the first and last crop line
     if ((lineNum - 1.0) * lineSeparation > fieldWidth) {
         ROS_ERROR("too many crop lines!");
         return -1;
@@ -97,24 +97,24 @@ int main(int argc, char** argv) {
     double endX = startX + (lineNum - 1.0) * lineSeparation;
     ROS_INFO("x range: (%.2f, %.2f)", startX, endX);
 
-    // componente y del inicio y final de una línea de cultivos
+    // y component of the first and last crop line
     double startY = - (fieldDepth / 2.0) + headland;
     double endY = (fieldDepth / 2.0) - headland;
     ROS_INFO("y range: (%.2f, %.2f)", startY, endY);
 
-    // componente x del objetivo anterior
+    // x component of the previous goal
     double prevGoalX = goalX;
 
-    // publica point cloud
+    // publish point cloud
     ros::Rate rate(sensorRate);
     while (ros::ok()) {
 
-        // crea la nube de puntos
+        // create point cloud
         sensor_msgs::PointCloud pc;
         pc.header.stamp = ros::Time::now();
         pc.header.frame_id = "base_link_vis";
 
-        // obtiene la posición (x, y) del base_link_vis del robot
+        // get position (x, y) of the robot base_link_vis
         tf::StampedTransform transform;
         ros::Time now = ros::Time::now();
         tf.waitForTransform("map", "base_link_vis", now, ros::Duration(2.0));
@@ -123,52 +123,51 @@ int main(int argc, char** argv) {
         double baseLinkY = transform.getOrigin().y();
         // ROS_INFO("base_link_vis: (%.2f, %.2f)", baseLinkX, baseLinkY);
 
-        // recorre las líneas
+        // for each crop line
         for (double lineX = startX; lineX <= endX; lineX += lineSeparation) {
 
-            // ROS_INFO("Analizando la generacion de la linea en x %.2f", lineX);
+            // ROS_INFO("Analyzing the generation of the line at en x %.2f", lineX);
 
             if (std::abs(lineX - baseLinkX) > sensorRange) {
-                // línea fuera del alcance del sensor (sin importar la orientación del robot)
-                // ROS_INFO("fuera del alcance del sensor");
+                // line out of sensor range (regardless of robot orientation)
+                // ROS_INFO("out of sensor range");
                 continue;
             }
 
             if (lineX > goalX - robotWidth / 2.0
                     && lineX < goalX + robotWidth / 2.0) {
-                // obstáculos que pasarán por debajo del robot
-                // ROS_INFO("obstaculos que pasan por debajo del robot");
+                // obstacles that can pass under the robot
+                // ROS_INFO("obstacles that can pass under the robot");
                 continue;
             }
 
-            // ROS_INFO("Se genera la linea en x %.2f", lineX);
+            // ROS_INFO("The line is generated at x %.2f", lineX);
 
-            // recorre las plantas de la línea
+            // for each plant of the line
             for (double plantY = startY; plantY <= endY; plantY += plantSeparation) {
 
-                // ROS_INFO("Analizando la generacion de la planta en y %.2f", plantY);
+                // ROS_INFO("Analyzing the generation of the plant at y %.2f", plantY);
 
                 if (pow(lineX - baseLinkX, 2.0) + pow(plantY - baseLinkY, 2.0)
                         > pow(sensorOffset + sensorRange, 2.0)) {
-                    // fuera del alcance del sensor
-                    // sin importar la orientación del robot
+                    // out of sensor range (regardless of robot orientation)
                     continue;
                 }
 
-                // ROS_INFO("Se genera la planta en y %.2f", plantY);
+                // ROS_INFO("The plant is generated at y %.2f", plantY);
 
-                // genera el punto del centro  de la planta y lo transforma al frame base_link_vis
-                geometry_msgs::PointStamped mapPoint; // planta en frame map
+                // generate the point at the center of the plant and transform it to the base_link_vis frame
+                geometry_msgs::PointStamped mapPoint; // plant in map frame
                 mapPoint.header.frame_id = "map";
                 mapPoint.header.stamp = ros::Time();
                 mapPoint.point.x = lineX;
                 mapPoint.point.y = plantY;
                 mapPoint.point.z = 0.0;
-                geometry_msgs::PointStamped basePoint; // planta en frame base_link_vis
+                geometry_msgs::PointStamped basePoint; // plant in base_link_vis frame
                 try {
                     tf.transformPoint("base_link_vis", mapPoint, basePoint);
                 } catch(tf::TransformException& ex){
-                    ROS_ERROR("Excepcion intentando hacer la transformacion de map a base_link_vis: %s",
+                    ROS_ERROR("Exception during transformation from map to base_link_vis frame: %s",
                             ex.what());
                     continue;
                 }
@@ -176,7 +175,7 @@ int main(int argc, char** argv) {
                 double x = basePoint.point.x;
                 double y = basePoint.point.y;
                 if (x <= sensorOffset) {
-                    // fuera del ángulo del sensor
+                    // out of the sensor angle
                     continue;
                 }
                 double angle;
@@ -186,25 +185,25 @@ int main(int argc, char** argv) {
                     angle = atan(-y / (x - sensorOffset));
                 }
                 if (sensorAngle / 2.0 < angle) {
-                    // fuera del ángulo del sensor
+                    // out of the sensor angle
                     continue;
                 }
 
-                // genera los puntos de la planta y los añade a la nube
+                // generate the plant points and add them to the cloud
                 std::vector<geometry_msgs::Point32> points;
                 points.clear();
                 createPlant(x, y, points);
                 pc.points.insert(pc.points.end(), points.begin(), points.end());
 
-                // ROS_INFO("Cantidad de puntos ya generados %d", (int) pc.points.size());
+                // ROS_INFO("Number of points already generated %d", (int) pc.points.size());
             }
 
         }
 
-        // publica la nube de puntos
+        // publish point cloud
         pub.publish(pc);
 
-        // si cambió el objetivo limpia el costmap
+        // if goal changed, then clean costmap
         // ROS_INFO("goal x: %.2f", goalX);
         if (prevGoalX != goalX) {
             std_srvs::Empty srv;
@@ -268,27 +267,3 @@ void createPlant(float x, float y, std::vector<geometry_msgs::Point32>& points) 
     points.push_back(point6);
 
 }
-
-/*
-
-si
-    |x_pm - x_bm| > R
-entonces
-    se descarta la hilera
-
-si
-    (x_pm - x_bm)^2 + (y_pm - y_bm)^2 > R^2
-entonces
-    se descarta el punto
-
-transformar (x_pm, y_pm) en (x_pb, y_pb)
-
-si
-    phi/2 < arctg(y_pb/x_pb) < 2*pi - phi/2
-entonces
-    se descarta el punto
-
-caso contrario se agrega
-
- */
-

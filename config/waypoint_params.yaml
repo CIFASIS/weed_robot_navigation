@@ -1,10 +1,10 @@
 # sequence: [3, 7]
 
 tracks: [1, 2]
-sprayers_range: 4 # cantidad de surcos y lineas que cubren los rociadores
+sprayers_range: 4 # number of furrows and ridges covered by the sprayers
 
-bottom: false # el primer giro es en la parte superior del campo
-travel_last: true # recorrer la última franja de la secuencia
+bottom: false # the first turn is at the top of the field
+travel_last: true # traverse the last swath of the sequence
 last_offset: 4.0
 
 t_turn_start: 2.0 #1.0

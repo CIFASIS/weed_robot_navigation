@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Genera archivos TUM para la trayectoria ideal que se usará de refernecia
+# Generates TUM files for the ideal trajectory to be used as reference
 #
 
 q = 0.7071067811865476
@@ -25,7 +25,6 @@ for pathType in ['optimal', 'three-jumps', 'trivial', 'trivial-omega']:
         if ty < -10.0 or ty > 10.0:
             continue
         tumCut.write(line)
-        # imprimir linea en tumRef con el x modificado
         tx = float(lineSplit[1])
         error = float('inf')
         newTx = 0
