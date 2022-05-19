@@ -26,7 +26,8 @@ generate_messages(
 )
 
 catkin_package(
-  DEPENDS roscpp gazebo_ros
+  CATKIN_DEPENDS roscpp gazebo_ros
+  DEPENDS GAZEBO
 )
 
 add_compile_options(-std=c++11)
